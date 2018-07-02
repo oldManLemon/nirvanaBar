@@ -4,7 +4,8 @@ import './App.css';
 
 import Hello from '../src/components/hello';
 import NavBar from './components/nav';
-import TableGen from './components/tableGens';
+import TableStatus from './components/tableGens';
+import TestButtonData from './components/buttonTest';
 
 class App extends Component {
   render() {
@@ -12,7 +13,8 @@ class App extends Component {
    
       <div>
        <NavBar/>
-       <TableGen/>
+       <TableStatus />
+       <TestButtonData/>
       </div>
     );
   }
