@@ -1,42 +1,93 @@
 import React from 'react';
-import {Table} from 'react-materialize';
+import { Table, Button } from 'react-materialize';
+import Thead from '../components/thead';
 
-export default class TableSatus extends React.Component{
-  constructor(){
+
+
+export default class TableSatus extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: [],
+      title: 'Current User Balance Sheet',
+      type: "balance"
+
+    };
+this.handleClick = this.handleClick.bind(this);
+  }
+  componentDidMount() {
+    fetch('http://localhost:4000/users')
+      .then(res => res.json())
+      .then(users => this.setState({ users }, () => console.log('Fetched: ', users)));
+  }
+  handleClick(e) {
+console.log("Click")
+this.setState={
+  type:"previous"
+}
+
+
+  }
+
+  render() {
+    console.log("Props: ", this.props);
+    return (
+      <div className="container">
+        <h2>{this.state.title}</h2>
+        <Table>
+          <Thead  type={this.state.type}/>
+          <tbody>
+            {this.state.users.map(users =>
+              <tr key={users.ID}><td>{users.Status}</td><td>{users.firstName} {users.lastName}</td><td>{users.currentBalance}</td></tr>
+            )}
+          </tbody>
+
+
+        </Table>
+            <Button onClick = {this.handleClick}>Previous</Button>
+      </div>
+
+
+    );
+
+  }
+
+}
+export class TableDetails extends React.Component {
+  constructor() {
     super();
     this.state = {
-        status: "Good",
-        name: "Andrew",
-        balance: 45
-    };
-    this.updateData = this.updateData.bind(this);
-}
+      users: [],
+      title: 'Current User Balance Sheet'
 
-updateData(){
-  this.setState({
-    status: "Bad",
-    name: "Matt H",
-    balance: 1
-  })
-}
-   render(){
-       return(
-        <Table>
+    };
+
+  }
+  componentDidMount() {
+    fetch('http://localhost:4000/users')
+      .then(res => res.json())
+      .then(users => this.setState({ users }));
+  }
+  render() {
+
+    return (<div className="container">
+      <Table>
         <thead>
-        <tr>
-          <th data-field="satus">Status</th>
-          <th data-field="name">Name</th>
-          <th data-field="price">Current Balance</th>
-        </tr>
-      </thead>
-      <tbody>
-        <td>{this.state.status}</td>
-        <td>{this.state.name}</td>
-        <td>{this.state.balance}</td>
-        </tbody>
-    
-        </Table>
-       );
-   }
-   
+          <tr>
+            <th data-field="satus">Status</th>
+            <th data-field="name">Name</th>
+            <th data-field="price">Current Balance</th>
+            <th data-field="price">Previous Balance</th>
+          </tr>
+        </thead>
+        {<tbody>
+          {this.state.users.map(users =>
+            <tr key={users.ID}><td>{users.Status}</td><td>{users.firstName} {users.lastName}</td><td>{users.currentBalance}</td><td>{users.previousBalance}</td></tr>
+          )}
+        </tbody>}
+      </Table>
+    </div>);
+
+  }
+
 }

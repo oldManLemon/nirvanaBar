@@ -1,5 +1,5 @@
 # dependencies
-/node_modules
+/nirvana-bar/node_modules
 
 # testing
 /coverage
