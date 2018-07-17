@@ -13,18 +13,20 @@ export default class TableSatus extends React.Component {
       type: "balance"
 
     };
-this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
   componentDidMount() {
     fetch('http://localhost:4000/users')
       .then(res => res.json())
-      .then(users => this.setState({ users }, () => console.log('Fetched: ', users)));
+      .then(users => this.setState({ users: [] },  () => console.log('Fetched: ', users)));
   }
   handleClick(e) {
-console.log("Click")
-this.setState={
-  type:"previous"
-}
+    console.log("Click")
+    this.setState({
+      users: this.state.users,
+      title: this.state.title,
+      type: "previous"
+    })
 
 
   }
@@ -35,7 +37,7 @@ this.setState={
       <div className="container">
         <h2>{this.state.title}</h2>
         <Table>
-          <Thead  type={this.state.type}/>
+          <Thead type={this.state.type} />
           <tbody>
             {this.state.users.map(users =>
               <tr key={users.ID}><td>{users.Status}</td><td>{users.firstName} {users.lastName}</td><td>{users.currentBalance}</td></tr>
@@ -44,7 +46,7 @@ this.setState={
 
 
         </Table>
-            <Button onClick = {this.handleClick}>Previous</Button>
+        <Button onClick={this.handleClick}>Previous</Button>
       </div>
 
 
